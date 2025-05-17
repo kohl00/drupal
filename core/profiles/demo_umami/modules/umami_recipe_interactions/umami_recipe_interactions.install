@@ -1,0 +1,106 @@
+<?php
+/**
+ * @file
+ * Install and uninstall hooks for Umami Recipe Interactions.
+ */
+
+use Drupal\Core\Database\SchemaObjectExistsException;
+
+/**
+ * Implements hook_install().
+ */
+function umami_recipe_interactions_install() {
+  $schema = _umami_recipe_interactions_schema();
+  foreach ($schema as $name => $table) {
+    try {
+      \Drupal::database()->schema()->createTable($name, $table);
+    }
+    catch (SchemaObjectExistsException $e) {
+      // Ignore if table already exists.
+    }
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function umami_recipe_interactions_uninstall() {
+  $schema = _umami_recipe_interactions_schema();
+  foreach (array_keys($schema) as $name) {
+    \Drupal::database()->schema()->dropTable($name);
+  }
+}
+
+/**
+ * Schema definition for recipe interactions tables.
+ */
+function _umami_recipe_interactions_schema() {
+  $schema = [];
+
+  $schema['recipe_rating'] = [
+    'fields' => [
+      'rid' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'rating' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'size' => 'tiny',
+      ],
+      'timestamp' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Unix timestamp of rating creation.',
+      ],
+    ],
+    'primary key' => ['rid'],
+    'unique keys' => [
+      'user_recipe' => ['nid', 'uid'],
+    ],
+  ];
+
+  $schema['recipe_favorite'] = [
+    'fields' => [
+      'fid' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'nid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'timestamp' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['fid'],
+    'unique keys' => [
+      'user_recipe' => ['nid', 'uid'],
+    ],
+  ];
+
+  return $schema;
+}

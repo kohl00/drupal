@@ -1,0 +1,5 @@
+name: 'Umami Recipe Interactions'
+type: module
+description: 'Adds recipe rating and favorites functionality.'
+package: 'Custom'
+core_version_requirement: ^10

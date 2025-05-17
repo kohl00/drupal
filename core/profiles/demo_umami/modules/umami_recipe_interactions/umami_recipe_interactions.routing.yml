@@ -1,0 +1,25 @@
+umami_recipe_interactions.rate:
+  path: '/recipe/{node}/rate'
+  defaults:
+    _controller: '\Drupal\umami_recipe_interactions\Controller\RecipeInteractionController::rate'
+  requirements:
+    _permission: 'rate recipes'
+    node: '\d+'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  methods: [POST]
+
+umami_recipe_interactions.favorite:
+  path: '/recipe/{node}/favorite'
+  defaults:
+    _controller: '\Drupal\umami_recipe_interactions\Controller\RecipeInteractionController::favorite'
+  requirements:
+    _permission: 'favorite recipes'
+    node: '\d+'
+  options:
+    parameters:
+      node:
+        type: entity:node
+  methods: [POST]
