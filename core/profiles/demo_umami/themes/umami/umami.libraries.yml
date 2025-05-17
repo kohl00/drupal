@@ -171,3 +171,11 @@ drupal.node.preview:
   css:
     theme:
       css/components/content/node-preview.css: {}
+recipe-interactions:
+  js:
+    js/components/recipe-interactions/recipe-interactions.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+    - core/once

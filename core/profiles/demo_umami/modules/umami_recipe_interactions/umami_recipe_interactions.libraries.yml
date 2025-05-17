@@ -1,0 +1,8 @@
+interactions:
+  js:
+    ../../themes/umami/js/components/recipe-interactions/recipe-interactions.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/drupalSettings
+    - core/once

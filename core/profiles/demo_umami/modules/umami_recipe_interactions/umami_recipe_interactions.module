@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file
+ * Module hooks for Umami Recipe Interactions.
+ */
+
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+
+/**
+ * Implements hook_permission().
+ */
+function umami_recipe_interactions_permission() {
+  return [
+    'rate recipes' => [
+      'title' => t('Rate recipes'),
+      'description' => t('Allow users to rate recipes.'),
+    ],
+    'favorite recipes' => [
+      'title' => t('Favorite recipes'),
+      'description' => t('Allow users to mark recipes as favorites.'),
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function umami_recipe_interactions_preprocess_node(array &$variables) {
+  if ($variables['node']->bundle() === 'recipe') {
+    $variables['#attached']['library'][] = 'umami_recipe_interactions/interactions';
+  }
+}
